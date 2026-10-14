@@ -1,6 +1,6 @@
 // Diagnóstico de la conexión a la base de datos (no muestra datos sensibles)
 import { NextResponse } from 'next/server';
-import { pool, ensureSchema } from '@/lib/db';
+import { pool, ensureSchema, limpiarUrl } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,8 +19,12 @@ function clasificar(e: unknown) {
 export async function GET() {
   const url = process.env.DATABASE_URL;
   if (!url) return NextResponse.json({ ok: false, problema: 'Falta la variable DATABASE_URL en Vercel.' }, { status: 500 });
+  const limpia = limpiarUrl(url);
   const forma = {
     empiezaBien: /^postgres(ql)?:\/\//.test(url.trim()),
+    seEncontroDireccion: /^postgres(ql)?:\/\//.test(limpia),
+    inicio: url.trim().slice(0, 14).replace(/:[^@]*$/, ':…'),
+    servidor: (limpia.match(/@([^/?]+)/) ?? [])[1] ?? 'no encontrado',
     tieneComillasOEspacios: /["'\s]/.test(url),
     tieneAsteriscos: url.includes('***'),
   };

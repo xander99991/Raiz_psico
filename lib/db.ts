@@ -3,9 +3,17 @@ import { Pool } from 'pg';
 
 const globalForDb = globalThis as unknown as { pool?: Pool; ready?: Promise<void> };
 
+/** Limpia la dirección por si se pegó con texto de más (DATABASE_URL=, psql, comillas, espacios) */
+export function limpiarUrl(raw = process.env.DATABASE_URL ?? '') {
+  const m = raw.match(/postgres(?:ql)?:\/\/[^\s'"`]+/);
+  const url = m ? m[0] : raw.trim();
+  // node-postgres no necesita channel_binding; lo quitamos para evitar incompatibilidades
+  return url.replace(/[?&]channel_binding=[^&]*/g, (x) => (x.startsWith('?') ? '?' : '')).replace(/\?&/, '?').replace(/\?$/, '');
+}
+
 export const pool =
   globalForDb.pool ??
-  new Pool({ connectionString: process.env.DATABASE_URL, max: 5, idleTimeoutMillis: 10_000 });
+  new Pool({ connectionString: limpiarUrl(), max: 5, idleTimeoutMillis: 10_000 });
 if (process.env.NODE_ENV !== 'production') globalForDb.pool = pool;
 
 const SCHEMA = `
