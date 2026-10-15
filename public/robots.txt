@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /unete
 
 Sitemap: https://www.raizpsicologia.org/sitemap.xml

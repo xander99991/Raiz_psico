@@ -44,6 +44,12 @@ CREATE TABLE IF NOT EXISTS blocked_slots (
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS blocked_slots_date_idx ON blocked_slots (date);
+CREATE TABLE IF NOT EXISTS team_profiles (
+  id              TEXT PRIMARY KEY,
+  data            JSONB NOT NULL,         -- ficha completa enviada desde /unete
+  photo           TEXT,                   -- foto comprimida (data URL)
+  created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 `;
 
 export function ensureSchema() {

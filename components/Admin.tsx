@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Download, Loader2, LogOut, MessageCircle, Mail, Trash2, RefreshCw } from 'lucide-react';
 import { equipo, getPsicologo, modalidades, type Modalidad } from '@/lib/equipo';
 import { formatLong, todayEC } from '@/lib/agenda';
+import { FichasAdmin } from './FichasAdmin';
 
 type Turno = { id: string; psychologistId: string; start: string; modality: string; name: string; email: string; phone: string; reason: string | null; tier: string; price: number; status: string; createdAt: string };
 type Bloqueo = { id: string; psychologistId: string; date: string; hour: string | null; reason: string | null };
@@ -16,7 +17,7 @@ export function Admin() {
   const [auth, setAuth] = useState<'?' | 'no' | 'si'>('?');
   const [pass, setPass] = useState('');
   const [err, setErr] = useState('');
-  const [tab, setTab] = useState<'proximos' | 'todos' | 'bloqueos'>('proximos');
+  const [tab, setTab] = useState<'proximos' | 'todos' | 'bloqueos' | 'fichas'>('proximos');
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [bloqueos, setBloqueos] = useState<Bloqueo[]>([]);
   const [filtro, setFiltro] = useState('todos');
@@ -122,12 +123,12 @@ export function Admin() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-2">
-          {(['proximos', 'todos', 'bloqueos'] as const).map((t) => (
+          {(['proximos', 'todos', 'bloqueos', 'fichas'] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)} className={`rounded-full px-4 py-2 font-display text-sm font-bold ${tab === t ? 'bg-marino text-hueso' : 'bg-white text-marino-900'}`}>
-              {t === 'proximos' ? 'Próximos turnos' : t === 'todos' ? 'Historial' : 'Bloquear horarios'}
+              {t === 'proximos' ? 'Próximos turnos' : t === 'todos' ? 'Historial' : t === 'bloqueos' ? 'Bloquear horarios' : 'Fichas del equipo'}
             </button>
           ))}
-          {tab !== 'bloqueos' && (
+          {(tab === 'proximos' || tab === 'todos') && (
             <>
               <select value={filtro} onChange={(e) => setFiltro(e.target.value)} className="input !w-auto !py-2 text-sm">
                 <option value="todos">Todo el equipo</option>
@@ -138,7 +139,9 @@ export function Admin() {
           )}
         </div>
 
-        {tab !== 'bloqueos' ? (
+        {tab === 'fichas' ? (
+          <FichasAdmin />
+        ) : tab !== 'bloqueos' ? (
           <div className="mt-6 space-y-8">
             {porDia.length === 0 && <p className="card p-8 text-center text-tinta/60">Aún no hay turnos aquí.</p>}
             {porDia.map(([dia, ts]) => (
