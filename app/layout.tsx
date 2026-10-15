@@ -10,6 +10,7 @@ import { WhatsAppFab } from '@/components/WhatsAppFab';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
   title: { default: `${site.name} · ${site.claim}`, template: `%s · RAÍZ Psicología` },
   description: site.description,
   openGraph: { title: `${site.name} · ${site.claim}`, description: site.description, images: ['/img/hero.webp'], locale: 'es_EC', type: 'website' },
