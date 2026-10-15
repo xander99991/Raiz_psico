@@ -4,7 +4,7 @@
 
 export const site = {
   name: 'RAÍZ Psicología Clínica',
-  url: 'https://raizpsicologia.org',
+  url: 'https://www.raizpsicologia.org',
   shortName: 'RAÍZ',
   claim: 'Reconecta en ti',
   description:

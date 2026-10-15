@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://raizpsicologia.org/sitemap.xml
+Sitemap: https://www.raizpsicologia.org/sitemap.xml
