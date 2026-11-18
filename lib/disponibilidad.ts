@@ -29,7 +29,7 @@ export async function disponibilidadMes(month: string, psychologistId: string, m
     let total = 0;
     if (!isTooFar(date, now)) {
       for (const p of candidatos) {
-        for (const hour of hoursFor(p, date)) {
+        for (const hour of hoursFor(p, date, modalidad)) {
           if (isTooSoon(date, hour, now)) continue;
           total++;
           if (!porHora.has(hour)) porHora.set(hour, []);

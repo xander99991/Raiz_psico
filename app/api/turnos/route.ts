@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
   const tarifa = calcularTarifa(answers);
   if (!tarifa) return NextResponse.json({ error: 'Primero calcula tu tarifa' }, { status: 400 });
 
-  const candidatos = psicologosPara(requested, modality).filter((p) => hoursFor(p, date).includes(hour));
+  const candidatos = psicologosPara(requested, modality).filter((p) => hoursFor(p, date, modality).includes(hour));
   if (candidatos.length === 0) return NextResponse.json({ error: 'No hay atención en ese horario' }, { status: 400 });
 
   try {

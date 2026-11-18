@@ -68,7 +68,7 @@ export const servicios = [
 ];
 
 export const pasos = [
-  { n: '01', titulo: 'Descubre tu tarifa', texto: 'Responde 4 preguntas y sabrás si te corresponde la tarifa social o la estándar.' },
+  { n: '01', titulo: 'Descubre tu tarifa', texto: 'Unas preguntas rápidas sobre tu hogar y sabrás si te corresponde la tarifa social o la estándar.' },
   { n: '02', titulo: 'Elige con quién', texto: 'Conoce al equipo y su corriente. Si no sabes, elige "quien tenga espacio".' },
   { n: '03', titulo: 'Escoge día y hora', texto: 'Solo verás horarios libres. Lo que ya está ocupado no se puede elegir.' },
   { n: '04', titulo: 'Primera sesión', texto: 'Te escribimos para confirmar. La primera sesión es para conocernos, sin presión.' },

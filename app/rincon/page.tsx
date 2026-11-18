@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { CheckIn, Respiracion, TestCorriente, Mitos, FraseDelDia } from '@/components/Rincon';
+import { CheckIn, Respiracion, Mitos, FraseDelDia } from '@/components/Rincon';
+import { TestCorriente } from '@/components/TestCorriente';
 import { Reveal, SectionTitle } from '@/components/ui';
 
 export const metadata: Metadata = { title: 'Rincón Raíz', description: 'Respiración guiada, test de corrientes, mitos y verdades sobre la terapia.' };
@@ -34,7 +35,7 @@ export default function RinconPage() {
 
       <section id="test" className="scroll-mt-24 py-20">
         <div className="container-raiz">
-          <SectionTitle eyebrow="Test ligero" title="¿Qué corriente va contigo?" intro="5 preguntas rápidas para descubrir qué forma de acompañamiento podría resonarte." />
+          <SectionTitle eyebrow="Test ligero" title="¿Qué corriente va contigo?" intro="14 preguntas para descubrir qué enfoque va contigo y con quién del equipo podrías trabajar." />
           <div className="mt-10"><TestCorriente /></div>
         </div>
       </section>

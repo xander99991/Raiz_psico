@@ -99,6 +99,18 @@ export const corrientes: Corriente[] = [
     color: 'bg-turquesa-100',
   },
   {
+    slug: 'narrativa',
+    nombre: 'Terapia narrativa',
+    epoca: 'Años 80 y 90',
+    anio: 1985,
+    referentes: 'Michael White, David Epston',
+    idea: 'La persona no es el problema: el problema es el problema. Las historias que nos cuentan —y que nos contamos— sobre quiénes somos pueden reescribirse, mirando también el contexto social que las moldea.',
+    sesion: 'Conversaciones colaborativas donde separas el problema de tu identidad, rescatas experiencias que quedaron fuera de la historia dominante y, a veces, escribes cartas o documentos.',
+    ayuda: 'Identidad, experiencias de violencia o discriminación, migración, momentos en que un problema parece definirte.',
+    pregunta: '¿Qué historia quiero contar sobre mí?',
+    color: 'bg-celeste-100',
+  },
+  {
     slug: 'contextuales',
     nombre: 'Terapias contextuales (tercera ola)',
     epoca: 'Años 90 en adelante',

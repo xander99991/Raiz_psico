@@ -53,7 +53,16 @@ const avatarColors = {
   agua: 'bg-agua text-marino-900',
 } as const;
 
-export function Avatar({ nombre, color, size = 'md' }: { nombre: string; color: keyof typeof avatarColors; size?: 'md' | 'lg' }) {
+export function Avatar({ nombre, color, size = 'md', foto }: { nombre: string; color: keyof typeof avatarColors; size?: 'md' | 'lg'; foto?: string }) {
+  if (foto)
+    return (
+      <img
+        src={foto}
+        alt={nombre}
+        className={`shrink-0 object-cover ${size === 'lg' ? 'h-28 w-28' : 'h-16 w-16'}`}
+        style={{ borderRadius: '58% 42% 55% 45% / 48% 55% 45% 52%' }}
+      />
+    );
   const ini = nombre.split(' ').filter(Boolean).slice(0, 2).map((s) => s[0]).join('');
   return (
     <div

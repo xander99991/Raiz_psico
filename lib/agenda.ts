@@ -38,8 +38,11 @@ export function monthDates(month: string) {
 export const slotKey = (psychologistId: string, date: string, hour: string) => `${psychologistId}|${date}T${hour}`;
 
 /** Horas de trabajo de un psicólogo en una fecha según su horario semanal. */
-export function hoursFor(p: Psicologo, date: string) {
-  return p.horario[weekday(date)] ?? [];
+export function hoursFor(p: Psicologo, date: string, modalidad?: Modalidad) {
+  const dia = weekday(date);
+  const permitidas = p.modalidadesPorDia?.[dia];
+  if (modalidad && permitidas && !permitidas.includes(modalidad)) return [];
+  return p.horario[dia] ?? [];
 }
 
 /** ¿El horario ya pasó o está demasiado cerca para reservarlo? */

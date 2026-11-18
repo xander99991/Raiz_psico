@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Play, Square, RotateCcw, Shuffle, CalendarHeart } from 'lucide-react';
 import { frases } from '@/lib/site';
-import { mitos, getCorriente } from '@/lib/corrientes';
-import { equipo } from '@/lib/equipo';
+import { mitos } from '@/lib/corrientes';
 
 /* ───────── ¿Cómo llegas hoy? ───────── */
 const estados = [
@@ -123,98 +122,6 @@ export function Respiracion() {
           <button onClick={reset} className="btn-ghost"><RotateCcw className="h-4 w-4" /> Reiniciar</button>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* ───────── Test: ¿qué corriente va contigo? ───────── */
-const test = [
-  { q: 'Cuando algo te preocupa, ¿qué te ayuda más?', o: [
-    { t: 'Entender de dónde viene, aunque tome tiempo', c: 'psicoanalisis' },
-    { t: 'Tener pasos concretos y herramientas prácticas', c: 'cognitivo-conductual' },
-    { t: 'Que alguien me escuche sin juzgar', c: 'humanista' },
-    { t: 'Ver cómo influyen las personas a mi alrededor', c: 'sistemica' },
-  ] },
-  { q: 'En una sesión te gustaría…', o: [
-    { t: 'Hablar libremente de lo que surja', c: 'psicoanalisis' },
-    { t: 'Salir con tareas para practicar', c: 'cognitivo-conductual' },
-    { t: 'Conectar con lo que siento en el cuerpo, aquí y ahora', c: 'gestalt' },
-    { t: 'Aprender a convivir con lo difícil sin pelear con ello', c: 'contextuales' },
-  ] },
-  { q: '¿Qué frase te resuena más?', o: [
-    { t: '“Lo que no se nombra, se repite.”', c: 'psicoanalisis' },
-    { t: '“Cambia tu forma de pensar y cambiará lo que sientes.”', c: 'cognitivo-conductual' },
-    { t: '“Nadie sabe más de tu vida que tú.”', c: 'humanista' },
-    { t: '“Lo personal también es social.”', c: 'comunitaria' },
-  ] },
-  { q: 'Lo que más te mueve a buscar ayuda es…', o: [
-    { t: 'Conflictos con mi pareja o mi familia', c: 'sistemica' },
-    { t: 'Ansiedad, estrés o pensamientos que no paran', c: 'cognitivo-conductual' },
-    { t: 'Emociones muy intensas que me desbordan', c: 'contextuales' },
-    { t: 'Sentir que algo me falta o que perdí el rumbo', c: 'humanista' },
-  ] },
-  { q: 'Te imaginas tu proceso como…', o: [
-    { t: 'Un viaje largo hacia adentro', c: 'psicoanalisis' },
-    { t: 'Un entrenamiento con metas claras', c: 'conductual' },
-    { t: 'Un encuentro con mis emociones', c: 'gestalt' },
-    { t: 'Un tejido con otras personas', c: 'comunitaria' },
-  ] },
-];
-
-export function TestCorriente() {
-  const [i, setI] = useState(0);
-  const [votos, setVotos] = useState<string[]>([]);
-  const fin = i >= test.length;
-
-  let ganador = '';
-  if (fin) {
-    const cuenta: Record<string, number> = {};
-    votos.forEach((v) => (cuenta[v] = (cuenta[v] ?? 0) + 1));
-    // desempate: preferimos corrientes con alguien del equipo
-    ganador = Object.entries(cuenta).sort((a, b) => b[1] - a[1] || Number(equipo.some((p) => p.corriente === b[0])) - Number(equipo.some((p) => p.corriente === a[0])))[0][0];
-  }
-  const c = fin ? getCorriente(ganador) : null;
-  const quienes = equipo.filter((p) => p.corriente === ganador);
-
-  return (
-    <div className="card overflow-hidden p-6 sm:p-10">
-      <AnimatePresence mode="wait">
-        {!fin ? (
-          <motion.div key={i} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-            <p className="font-display text-sm font-bold text-turquesa-600">Pregunta {i + 1} de {test.length}</p>
-            <h3 className="mt-3 font-display text-2xl font-bold text-marino-900 sm:text-3xl">{test[i].q}</h3>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {test[i].o.map((o) => (
-                <button key={o.t} onClick={() => { setVotos([...votos, o.c]); setI(i + 1); }}
-                  className="rounded-2xl border-2 border-marino/10 bg-white px-5 py-4 text-left font-semibold transition hover:-translate-y-0.5 hover:border-turquesa">
-                  {o.t}
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        ) : (
-          c && (
-            <motion.div key="fin" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
-              <p className="font-display text-sm font-bold uppercase tracking-widest text-turquesa-600">Podría resonarte</p>
-              <h3 className="mt-3 font-display text-3xl font-bold text-marino-900 sm:text-4xl">{c.nombre}</h3>
-              <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-tinta/75">{c.idea}</p>
-              {quienes.length > 0 && (
-                <p className="mt-6 text-tinta/75">En RAÍZ trabaja desde aquí: {quienes.map((p) => p.nombre).join(', ')}.</p>
-              )}
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                {quienes[0] ? (
-                  <Link href={`/agenda?psicologo=${quienes[0].id}`} className="btn-turquesa"><CalendarHeart className="h-4 w-4" /> Agendar con {quienes[0].nombre.split(' ')[0]}</Link>
-                ) : (
-                  <Link href="/agenda" className="btn-turquesa"><CalendarHeart className="h-4 w-4" /> Agendar un turno</Link>
-                )}
-                <Link href={`/psicologia#${c.slug}`} className="btn-ghost">Leer sobre esta corriente</Link>
-                <button onClick={() => { setI(0); setVotos([]); }} className="btn-ghost"><RotateCcw className="h-4 w-4" /> Repetir</button>
-              </div>
-              <p className="mt-6 text-sm text-tinta/50">Es un juego para orientarte, no un diagnóstico. En la primera sesión lo conversamos mejor.</p>
-            </motion.div>
-          )
-        )}
-      </AnimatePresence>
     </div>
   );
 }

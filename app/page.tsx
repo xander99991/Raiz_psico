@@ -88,7 +88,7 @@ export default function Home() {
               light
               eyebrow="Justicia social"
               title={<>Tu cita cuesta lo que es <span className="text-agua">justo para ti</span></>}
-              intro="La salud mental no debería depender de cuánto ganas. Responde 4 preguntas y descubre si te corresponde la tarifa social o la estándar. Sin papeles: confiamos en tu palabra."
+              intro="La salud mental no debería depender de cuánto ganas. Responde unas preguntas rápidas sobre tu hogar y descubre si te corresponde la tarifa social o la estándar. Sin papeles: confiamos en tu palabra."
             />
             <Reveal delay={0.2} className="mt-9">
               <Link href="/tarifa" className="btn-light !py-4 text-base">
@@ -120,11 +120,11 @@ export default function Home() {
             <SectionTitle eyebrow="Equipo" title="Personas que acompañan, cada una desde su mirada" />
             <Reveal><Link href="/equipo" className="btn-ghost">Conocer al equipo <ArrowRight className="h-4 w-4" /></Link></Reveal>
           </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {equipo.map((p, i) => (
               <Reveal key={p.id} delay={i * 0.08}>
                 <Link href={`/equipo#${p.id}`} className="card group flex h-full flex-col p-6 transition hover:-translate-y-1">
-                  <Avatar nombre={p.nombre} color={p.color} />
+                  <Avatar nombre={p.nombre} color={p.color} foto={p.foto} />
                   <h3 className="mt-5 font-display text-lg font-bold text-marino-900">{p.nombre}</h3>
                   <p className="text-sm text-tinta/60">{p.titulo}</p>
                   <span className="mt-4 inline-flex w-fit rounded-full bg-turquesa-100 px-3 py-1 text-xs font-bold text-turquesa-600">

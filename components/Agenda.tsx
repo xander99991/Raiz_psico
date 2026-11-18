@@ -147,7 +147,7 @@ export function Agenda({ psicologoInicial }: { psicologoInicial?: string }) {
             </div>
           ) : (
             <>
-              <p className="mb-5 text-tinta/75">Responde 4 preguntas rápidas para saber cuánto cuesta tu cita.</p>
+              <p className="mb-5 text-tinta/75">Responde unas preguntas rápidas (2 minutos) para saber cuánto cuesta tu cita.</p>
               <Calculadora embedded onDone={(r) => setTarifa(r)} />
             </>
           )}
@@ -164,7 +164,7 @@ export function Agenda({ psicologoInicial }: { psicologoInicial?: string }) {
             {equipo.map((p) => (
               <button key={p.id} onClick={() => setPsico(p.id)} aria-pressed={psico === p.id}
                 className={`flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition ${psico === p.id ? 'border-turquesa bg-turquesa-100' : 'border-marino/10 bg-white hover:border-turquesa/50'}`}>
-                <Avatar nombre={p.nombre} color={p.color} />
+                <Avatar nombre={p.nombre} color={p.color} foto={p.foto} />
                 <span><span className="block font-display font-bold text-marino-900">{p.nombre}</span><span className="text-sm text-tinta/60">{getCorriente(p.corriente)?.nombre}</span></span>
               </button>
             ))}

@@ -16,7 +16,7 @@ export default function TarifaPage() {
             <h1 className="h-display mt-5 text-4xl leading-tight sm:text-5xl">¿Cuánto cuesta mi cita?</h1>
             <p className="mt-5 text-lg leading-relaxed text-tinta/75">
               Tenemos dos tarifas: <strong className="text-marino-900">${tarifas.social.precio}</strong> (social) y{' '}
-              <strong className="text-marino-900">${tarifas.estandar.precio}</strong> (estándar) por sesión. Responde 4 preguntas rápidas y te diremos cuál es la tuya.
+              <strong className="text-marino-900">${tarifas.estandar.precio}</strong> (estándar) por sesión. Responde unas preguntas rápidas y te diremos cuál es la tuya.
             </p>
           </Reveal>
           <Reveal delay={0.15} className="mt-10 space-y-5">
