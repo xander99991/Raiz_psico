@@ -55,9 +55,11 @@ export const equipo: Psicologo[] = [
       'Maestrante en Políticas Públicas · FLACSO Ecuador',
     ],
     experiencia: 2,
+    senescyt: '1005-2025-3154769',
     modalidades: ['presencial-quito', 'online'],
     horario: { 1: h(18, 19), 2: h(18, 19), 3: h(20), 4: h(18, 19), 6: h(7, 8) },
     color: 'marino',
+    foto: '/img/equipo/micaela-nunez.webp',
   },
   {
     id: 'laura-ruiz',
@@ -74,10 +76,12 @@ export const equipo: Psicologo[] = [
       'Maestría en Prácticas Narrativas',
     ],
     experiencia: 12,
+    senescyt: '4841143435',
     destacado: '12 años de experiencia',
     modalidades: ['online'],
     horario: { 1: h(9, 10, 11, 20), 2: h(20), 3: h(9, 10), 5: h(9, 10, 11), 6: h(9, 10) },
     color: 'turquesa',
+    foto: '/img/equipo/laura-ruiz.webp',
   },
   {
     id: 'jorge-paz',
@@ -102,6 +106,7 @@ export const equipo: Psicologo[] = [
     modalidadesPorDia: { 1: ['online'], 2: ['online'], 3: ['online'], 4: ['online'], 5: ['online'], 6: ['presencial-quito'] },
     horario: { 1: h(18, 19), 2: h(18, 19), 3: h(18, 19), 4: h(18, 19), 5: h(18, 19), 6: h(11, 12) },
     color: 'agua',
+    foto: '/img/equipo/jorge-paz.webp',
   },
   {
     id: 'jorge-mora',
@@ -121,6 +126,7 @@ export const equipo: Psicologo[] = [
     modalidades: ['online'],
     horario: { 1: h(19, 20), 3: h(19, 20), 6: h(9, 10, 11) },
     color: 'celeste',
+    foto: '/img/equipo/jorge-mora.webp',
   },
   {
     id: 'liz-ramirez',
@@ -141,6 +147,7 @@ export const equipo: Psicologo[] = [
     modalidades: ['online'],
     horario: { 1: h(17, 18), 3: h(17), 5: h(20) },
     color: 'turquesa',
+    foto: '/img/equipo/liz-ramirez.webp',
   },
   {
     id: 'morelia-navarrete',
@@ -162,6 +169,7 @@ export const equipo: Psicologo[] = [
       5: h(8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 20),
     },
     color: 'celeste',
+    foto: '/img/equipo/morelia-navarrete.webp',
   },
 ];
 

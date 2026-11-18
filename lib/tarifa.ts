@@ -8,8 +8,10 @@
 //      Con seguro que reembolsa la terapia → tarifa estándar directa.
 //   4. Frecuencia semanal en el tramo intermedio-alto → baja un tramo.
 //   5. Contraste con lo que la persona dice poder pagar (P14):
-//      nunca se cobra más de lo que declaró, y si declaró poder pagar
-//      bastante más de lo calculado, gana su autoevaluación.
+//      • Si dice que puede pagar MÁS que la tarifa estándar → estándar (gana su autoevaluación).
+//      • Si dice que puede pagar MENOS, se le cree solo si su situación lo respalda:
+//        tramo intermedio (3) y al menos una señal de dificultad. En el tramo más alto (4)
+//        el ingreso por persona manda, para que la tarifa social llegue a quien la necesita.
 //   Tramos 1–2 → tarifa social · Tramos 3–4 → tarifa estándar
 // ─────────────────────────────────────────────────────────────
 
@@ -21,7 +23,7 @@ export const tarifas = {
 export type TierId = keyof typeof tarifas;
 
 /** Límites de ingreso mensual POR PERSONA para los tramos 1→2, 2→3 y 3→4 (USD) */
-export const limitesTramo = [150, 350, 700];
+export const limitesTramo = [150, 400, 800];
 
 export type Opcion = { id: string; texto: string; emoji?: string };
 export type Pregunta = {
@@ -58,8 +60,9 @@ export const preguntas: Pregunta[] = [
     ayuda: 'Sueldos, ventas, bonos, pensiones, ayudas de familiares… todo junto.',
     opciones: [
       { id: 'menos-500', texto: 'Menos de $500' },
-      { id: '500-1000', texto: '$500 – $1.000' },
-      { id: '1000-1800', texto: '$1.000 – $1.800' },
+      { id: '500-800', texto: '$500 – $800' },
+      { id: '800-1200', texto: '$800 – $1.200' },
+      { id: '1200-1800', texto: '$1.200 – $1.800' },
       { id: '1800-3000', texto: '$1.800 – $3.000' },
       { id: 'mas-3000', texto: 'Más de $3.000' },
     ],
@@ -156,7 +159,7 @@ export const DECLARACION =
   'Declaro que la información es verdadera. Entiendo que la tarifa social existe para que más personas accedan a terapia.';
 
 // Valor representativo de cada rango de ingreso del hogar (USD/mes)
-const INGRESO: Record<string, number> = { 'menos-500': 350, '500-1000': 750, '1000-1800': 1400, '1800-3000': 2400, 'mas-3000': 3500 };
+const INGRESO: Record<string, number> = { 'menos-500': 300, '500-800': 650, '800-1200': 1000, '1200-1800': 1500, '1800-3000': 2400, 'mas-3000': 3500 };
 // Máximo que la persona dice poder pagar por sesión
 const PUEDE_MAX: Record<string, number> = { 'menos-10': 10, '10-20': 20, '20-30': 30, '30-40': 40, 'mas-40': 999 };
 
@@ -189,10 +192,10 @@ export function calcularTarifa(r: Respuestas) {
     motivo = 'seguro';
   } else {
     const puede = PUEDE_MAX[r.puedoPagar];
-    if (puede < tarifas.estandar.precio) { tier = 'social'; motivo = 'tope'; }
-    else if (tier === 'social' && puede > tarifas.estandar.precio) { tier = 'estandar'; motivo = 'autoevaluacion'; }
+    if (tier === 'social' && puede > tarifas.estandar.precio) { tier = 'estandar'; motivo = 'autoevaluacion'; }
+    else if (tier === 'estandar' && puede < tarifas.estandar.precio && tramo === 3 && senales >= 1) { tier = 'social'; motivo = 'tope'; }
   }
   return { tier, tramo, percapita, senales, motivo, ...tarifas[tier] };
 }
 
-export const STORAGE_KEY = 'raiz-tarifa-v2';
+export const STORAGE_KEY = 'raiz-tarifa-v3';
